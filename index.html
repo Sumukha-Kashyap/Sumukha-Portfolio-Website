@@ -127,11 +127,12 @@
             transition: var(--transition);
         }
 
+        /* MODIFIED: Removed grayscale filter so image is always colored */
         .hero-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%);
+            /* filter: grayscale(100%);  <-- Removed this line */
             transition: var(--transition);
             display: block;
         }
@@ -142,7 +143,7 @@
         }
 
         .hero-img-container:hover .hero-img {
-            filter: grayscale(0%);
+            /* filter: grayscale(0%); <-- Removed redundant line */
             transform: scale(1.1);
         }
 
@@ -288,6 +289,11 @@
             margin-bottom: 1rem;
         }
 
+        .project-card h4 a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
         .project-card p {
             font-size: 0.95rem;
             margin-bottom: auto;
@@ -316,43 +322,119 @@
             padding: 1.5rem;
             border: 1px solid rgba(100, 255, 218, 0.1);
             transition: var(--transition);
+            cursor: pointer;
+            position: relative;
         }
 
         .cert-card:hover {
             border-color: var(--primary);
             transform: translateY(-5px);
+            background: #172a45;
+        }
+        
+        .cert-card::after {
+            content: '\f06e';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cert-card:hover::after {
+            opacity: 1;
         }
 
         .cert-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
+            align-items: center;
         }
 
         .cert-title {
             color: var(--secondary);
             font-size: 1.1rem;
             font-weight: bold;
-            padding-right: 1rem;
+            padding-right: 2rem;
         }
 
         .cert-badge-img {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             flex-shrink: 0;
+            margin-left: 10px;
         }
 
-        /* FIXED IMAGE STYLE FOR FULL VISIBILITY */
         .cert-proof-img {
+            display: none;
+        }
+
+        /* --- MODAL STYLES --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
             width: 100%;
-            height: auto;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 900px;
+            max-height: 80vh;
             object-fit: contain;
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin-top: 1rem;
-            transition: var(--transition);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            animation: zoomIn 0.3s;
+        }
+
+        .modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: var(--primary);
+            padding: 10px 0;
+            height: 150px;
+            font-family: monospace;
+            font-size: 1.2rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--primary);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes zoomIn {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
         }
 
         /* --- Skills Grid --- */
@@ -460,6 +542,7 @@
             .section-title::after { width: 100px; }
             section { padding: 4rem 5%; }
             .nav-links { display: none; }
+            .modal-content { width: 95%; }
         }
     </style>
 </head>
@@ -482,10 +565,9 @@
         <div class="hero-text">
             <h4>Hi, my name is</h4>
             <h1>Sumukha R Kashyap.</h1>
-            <h2>I build secure, intelligent systems.</h2>
+            <h2>Cognitive-Driven Tech Enthusiast</h2>
             <p>
-                Research-driven Computer Science Engineer specializing in Artificial Intelligence, Machine Learning, and Cybersecurity. 
-                I design scalable data-centric solutions and secure neural networks.
+                Rooted in AI, ML, and Cybersecurity, my purpose is to contribute to a sustainable and secure tech ecosystem through continuous learning, research, and meaningful innovation.
             </p>
             <div style="margin-top: 2rem;">
                 <a href="mailto:sumukharkashyap@gmail.com" class="btn">Get In Touch</a>
@@ -557,9 +639,9 @@
             <div class="project-card">
                 <div class="project-top">
                     <i class="fas fa-shield-alt"></i>
-                    <a href="#" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
+                    <a href="https://github.com/Sumukha-Kashyap/MITM-Attack-Detection-Using-LSTM-Neural-Networks" target="_blank" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
                 </div>
-                <h4>NeuroShield (Final Year Project)</h4>
+                <h4><a href="https://github.com/Sumukha-Kashyap/MITM-Attack-Detection-Using-LSTM-Neural-Networks" target="_blank" style="text-decoration: none; color: inherit;">NeuroShield (Final Year Project)</a></h4>
                 <p>Real-time MITM attack detection using LSTM neural networks. Achieved 98.94% accuracy on 278k+ network records.</p>
                 <div class="tech-stack">
                     <span>Python</span>
@@ -572,9 +654,9 @@
             <div class="project-card">
                 <div class="project-top">
                     <i class="fas fa-car-on"></i>
-                    <a href="#" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
+                    <a href="https://github.com/Sumukha-Kashyap/Traffic-Management-System" target="_blank" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
                 </div>
-                <h4>Traffic Fine Management System</h4>
+                <h4><a href="https://github.com/Sumukha-Kashyap/Traffic-Management-System" target="_blank" style="text-decoration: none; color: inherit;">Traffic Fine Management System</a></h4>
                 <p>MySQL + Flask system managing data for 500+ vehicles across 6 RTO zones. Includes Police Portal for rapid logging (<30s) and Admin Portal for analytics.</p>
                 <div class="tech-stack">
                     <span>Flask</span>
@@ -586,9 +668,9 @@
             <div class="project-card">
                 <div class="project-top">
                     <i class="fas fa-layer-group"></i>
-                    <a href="#" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
+                    <a href="https://github.com/Sumukha-Kashyap/Weaving-Fabric-Defect-Detection" target="_blank" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
                 </div>
-                <h4>Fabric Defect Detection</h4>
+                <h4><a href="https://github.com/Sumukha-Kashyap/Weaving-Fabric-Defect-Detection" target="_blank" style="text-decoration: none; color: inherit;">Weaving Fabric Defect Detection</a></h4>
                 <p>Processed 1,000+ fabric images using Digital Image Processing (GLCM, filtering) achieving 92%+ accuracy in defect detection.</p>
                 <div class="tech-stack">
                     <span>OpenCV</span>
@@ -661,10 +743,13 @@
         <div class="section-title">
             <h3>Certifications</h3>
         </div>
+        <p style="margin-bottom: 2rem; color: var(--text-gray); font-size: 0.9rem;">
+            <i class="fas fa-info-circle" style="color: var(--primary);"></i> Click on any certification below to view the certificate.
+        </p>
 
         <h4 class="category-title">01. Professional Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">
                         Oracle Cloud Infrastructure 2025 Certified Data Science Professional
@@ -674,7 +759,7 @@
                 <img src="ds_cert.jpeg" alt="Data Science Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">
                         Oracle Cloud Infrastructure 2025 Certified Developer Professional
@@ -687,7 +772,7 @@
 
         <h4 class="category-title">02. NPTEL Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Programming in Java (Elite + Gold)</div>
                     <div class="accent-text">Score: 94%</div>
@@ -695,21 +780,21 @@
                 <img src="java.jpeg" alt="Java Certificate" class="cert-proof-img">
             </div>
             
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
-                    <div class="cert-title">Data Analytics using Python (Elite + Silver)</div>
+                    <div class="cert-title">Data Analytics with Python (Elite + Silver)</div>
                 </div>
                 <img src="data_analytics.jpeg" alt="Analytics Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Cloud Computing (Elite + Silver)</div>
                 </div>
                 <img src="cloud_computing.jpeg" alt="Cloud Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Ethical Hacking (Elite)</div>
                 </div>
@@ -717,21 +802,21 @@
             </div>
 
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Software Engineering (Elite)</div>
                 </div>
                 <img src="software.jpeg" alt="SE Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Introduction to Internet of Things (Elite)</div>
                 </div>
                 <img src="iot.jpeg" alt="SE Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Introduction to Machine Learning</div>
                 </div>
@@ -741,45 +826,45 @@
 
         <h4 class="category-title">03. Kaggle Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Python</div>
                 </div>
-                <img src="Sumukha R Kashyap - Python.png" alt="Upload Kaggle Cert" class="cert-proof-img">
+                <img src="Sumukha R Kashyap - Python.png" alt="Python Kaggle Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Intro to Programming</div>
                 </div>
-                <img src="Sumukha R Kashyap - Intro to Programming.png" alt="Upload Kaggle Cert" class="cert-proof-img">
+                <img src="Sumukha R Kashyap - Intro to Programming.png" alt="Programming Kaggle Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Intro to Machine Learning</div>
                 </div>
-                <img src="Sumukha R Kashyap - Intro to Machine Learning.png" alt="Upload Kaggle Cert" class="cert-proof-img">
+                <img src="Sumukha R Kashyap - Intro to Machine Learning.png" alt="ML Kaggle Cert" class="cert-proof-img">
             </div>
         </div>
 
         <h4 class="category-title">04. Hackerrank Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Python (Basic)</div>
                 </div>
                 <img src="py_basic.jpeg" alt="Upload Hackerrank Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Problem Solving (Basic)</div>
                 </div>
                 <img src="problem_solving.jpeg" alt="Upload Hackerrank Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Software Engineer</div>
                 </div>
@@ -789,21 +874,21 @@
 
         <h4 class="category-title">05. Other Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Natural Language Processing</div>
                 </div>
                 <img src="nlp.jpeg" alt="ML Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Introduction to Industry 4.0 & Industrial Internet of Things</div>
                 </div>
                 <img src="iiot.jpeg" alt="ML Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card">
+            <div class="cert-card" onclick="openModal(this)">
                 <div class="cert-header">
                     <div class="cert-title">Careers in Finance</div>
                 </div>
@@ -817,13 +902,13 @@
             <h3>Research & Publications</h3>
         </div>
         
-        <div class="list-item-card">
+        <div class="list-item-card" onclick="openModal(this)" style="cursor: pointer;">
             <h4 class="list-title">Cloud Computing on Pneumonia (COVID-19) Detection using CNN</h4>
             <p class="accent-text" style="margin: 0.5rem 0;">Published in IJARCCE – DOI: 10.17148/IJARCCE.2022.11155</p>
             <p>Processed 5,000+ chest X-rays achieving 93–96% accuracy. Implemented cloud-based training workflows that reduced training time by ~35%.</p>
             
             <div style="margin-top: 1.5rem; border-top: 1px dashed var(--text-gray); padding-top: 1rem;">
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--secondary);">Certificate of Publication:</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--secondary);">Certificate of Publication (Click to View):</p>
                 <img src="publication.jpeg" alt="Publication Certificate" class="cert-proof-img">
             </div>
         </div>
@@ -855,6 +940,48 @@
             Designed & Built by Sumukha R Kashyap
         </p>
     </section>
+
+    <div id="certModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+
+    <script>
+        // Function to open the modal
+        function openModal(element) {
+            var modal = document.getElementById("certModal");
+            var modalImg = document.getElementById("modalImg");
+            var captionText = document.getElementById("modalCaption");
+            
+            // Find the hidden image inside the clicked card
+            var hiddenImg = element.querySelector('.cert-proof-img');
+            
+            if (hiddenImg) {
+                modal.style.display = "block";
+                modalImg.src = hiddenImg.src;
+                
+                // Optional: Get title for caption
+                var title = element.querySelector('.cert-title');
+                if(title) {
+                    captionText.innerHTML = title.innerText;
+                } else {
+                    captionText.innerHTML = "";
+                }
+            }
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById("certModal");
+            modal.style.display = "none";
+        }
+        
+        // Prevent closing when clicking on the image itself
+        document.getElementById("modalImg").onclick = function(e) {
+            e.stopPropagation();
+        }
+    </script>
 
 </body>
 </html>
