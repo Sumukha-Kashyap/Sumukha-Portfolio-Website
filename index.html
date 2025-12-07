@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sumukha R Kashyap | Portfolio</title>
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
     <style>
         :root {
             --primary: #64ffda;
@@ -30,6 +36,18 @@
             background-color: var(--bg-dark);
             color: var(--text-gray);
             line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll from 3D effects */
+        }
+
+        /* --- PARTICLES BACKGROUND --- */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            z-index: -1; /* Behind everything */
+            top: 0;
+            left: 0;
         }
 
         /* --- Navigation --- */
@@ -38,7 +56,7 @@
             top: 0;
             width: 100%;
             padding: 1.5rem 2rem;
-            background: rgba(10, 25, 47, 0.95);
+            background: rgba(10, 25, 47, 0.85); /* Slightly more transparent */
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
@@ -96,18 +114,49 @@
             margin-bottom: 1rem;
         }
 
+        /* GLITCH EFFECT FOR NAME */
         .hero h1 {
             color: var(--secondary);
             font-size: 4rem;
             line-height: 1.1;
             margin-bottom: 1rem;
+            cursor: default;
         }
 
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch-hover:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--primary);
+            text-shadow: 3px 3px var(--bg-dark), -2px -2px #ff00de; /* Cyberpunk Pink Shadow */
+        }
+
+        /* TYPEWRITER STYLES */
         .hero h2 {
             color: var(--text-gray);
             font-size: 3rem;
             line-height: 1.1;
             margin-bottom: 2rem;
+            min-height: 3.3rem;
+        }
+
+        .typewriter-cursor {
+            color: var(--primary);
+            border-right: 3px solid var(--primary);
+            padding-right: 5px;
+            animation: blinkCursor 0.75s step-end infinite;
+        }
+
+        @keyframes blinkCursor {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary); }
         }
 
         .hero p {
@@ -125,25 +174,25 @@
             overflow: hidden;
             box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
             transition: var(--transition);
+            /* Ensure the image doesn't tilt weirdly */
+            transform-style: preserve-3d;
         }
 
-        /* MODIFIED: Removed grayscale filter so image is always colored */
         .hero-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* filter: grayscale(100%);  <-- Removed this line */
             transition: var(--transition);
             display: block;
         }
 
         .hero-img-container:hover {
             box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
-            transform: scale(1.02);
+            /* Simple scale for profile image instead of tilt for stability */
+            transform: scale(1.02); 
         }
 
         .hero-img-container:hover .hero-img {
-            /* filter: grayscale(0%); <-- Removed redundant line */
             transform: scale(1.1);
         }
 
@@ -158,6 +207,8 @@
             font-family: monospace;
             background: transparent;
             cursor: pointer;
+            z-index: 10;
+            position: relative;
         }
 
         .btn:hover {
@@ -169,6 +220,8 @@
         /* --- Sections General --- */
         section {
             padding: 5rem 10%;
+            position: relative;
+            z-index: 1; /* Above particles */
         }
 
         .section-title {
@@ -206,7 +259,8 @@
 
         /* --- List Item Styles --- */
         .list-item-card {
-            background: var(--bg-light);
+            background: rgba(17, 34, 64, 0.7); /* Translucent for particles */
+            backdrop-filter: blur(5px);
             padding: 1.5rem;
             margin-bottom: 1rem;
             border-radius: 4px;
@@ -215,7 +269,7 @@
         }
 
         .list-item-card:hover {
-            background: #172a45;
+            background: rgba(23, 42, 69, 0.9);
             border-left: 3px solid var(--primary);
             transform: translateX(5px);
         }
@@ -248,20 +302,26 @@
         }
 
         .project-card {
-            background: var(--bg-light);
+            background: rgba(17, 34, 64, 0.8); /* Translucent */
+            backdrop-filter: blur(5px);
             padding: 2rem;
             border-radius: 6px;
-            transition: var(--transition);
+            /* Transition handled by Vanilla Tilt largely, but keeping this for color */
+            transition: background 0.3s;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             height: 100%;
+            /* 3D Transform Settings */
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
         }
 
+        /* Removed standard hover transform to let Vanilla Tilt handle movement */
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 30px -15px rgba(0,0,0,0.5);
+            background: rgba(23, 42, 69, 0.95);
+            /* box-shadow: 0 20px 30px -15px rgba(0,0,0,0.5); Managed by glare */
         }
 
         .project-card::before {
@@ -272,6 +332,7 @@
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
+            z-index: 2;
         }
         .project-card:hover::before { transform: scaleX(1); }
 
@@ -281,12 +342,14 @@
             margin-bottom: 1.5rem;
             color: var(--primary);
             font-size: 2rem;
+            transform: translateZ(20px); /* Pop out effect */
         }
 
         .project-card h4 {
             color: var(--secondary);
             font-size: 1.3rem;
             margin-bottom: 1rem;
+            transform: translateZ(20px);
         }
 
         .project-card h4 a:hover {
@@ -298,6 +361,7 @@
             font-size: 0.95rem;
             margin-bottom: auto;
             padding-bottom: 1.5rem;
+            transform: translateZ(20px);
         }
 
         .tech-stack {
@@ -306,6 +370,7 @@
             gap: 10px;
             font-family: monospace;
             font-size: 0.8rem;
+            transform: translateZ(20px);
         }
 
         /* --- Certifications Layout --- */
@@ -317,19 +382,19 @@
         }
 
         .cert-card {
-            background: var(--bg-light);
+            background: rgba(17, 34, 64, 0.8);
+            backdrop-filter: blur(5px);
             border-radius: 8px;
             padding: 1.5rem;
             border: 1px solid rgba(100, 255, 218, 0.1);
-            transition: var(--transition);
             cursor: pointer;
             position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
         }
 
         .cert-card:hover {
             border-color: var(--primary);
-            transform: translateY(-5px);
-            background: #172a45;
         }
         
         .cert-card::after {
@@ -342,6 +407,7 @@
             color: var(--primary);
             opacity: 0;
             transition: opacity 0.3s ease;
+            transform: translateZ(30px);
         }
 
         .cert-card:hover::after {
@@ -352,6 +418,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transform: translateZ(20px);
         }
 
         .cert-title {
@@ -367,6 +434,7 @@
             object-fit: contain;
             flex-shrink: 0;
             margin-left: 10px;
+            transform: translateZ(30px);
         }
 
         .cert-proof-img {
@@ -445,7 +513,7 @@
         }
 
         .skill-item {
-            background: var(--bg-light);
+            background: rgba(17, 34, 64, 0.8);
             padding: 1rem;
             text-align: center;
             border-radius: 4px;
@@ -453,6 +521,7 @@
             cursor: default;
             font-family: monospace;
             font-size: 0.9rem;
+            backdrop-filter: blur(2px);
         }
 
         .skill-item:hover {
@@ -548,6 +617,8 @@
 </head>
 <body>
 
+    <div id="particles-js"></div>
+
     <nav>
         <a href="#" class="logo">SRK.</a>
         <div class="nav-links">
@@ -564,8 +635,11 @@
     <section class="hero" id="about">
         <div class="hero-text">
             <h4>Hi, my name is</h4>
-            <h1>Sumukha R Kashyap.</h1>
-            <h2>Cognitive-Driven Tech Enthusiast</h2>
+            
+            <h1 class="glitch-hover">Sumukha R Kashyap.</h1>
+            
+            <h2>I am a <span id="typewriter-text" class="typewriter-cursor"></span></h2>
+            
             <p>
                 Rooted in AI, ML, and Cybersecurity, my purpose is to contribute to a sustainable and secure tech ecosystem through continuous learning, research, and meaningful innovation.
             </p>
@@ -575,7 +649,7 @@
         </div>
         
         <div class="hero-img-container">
-            <img src="dp.jpeg" alt="Sumukha R Kashyap" class="hero-img">
+            <img src="mypic.png" alt="Sumukha R Kashyap" class="hero-img">
         </div>
     </section>
 
@@ -636,7 +710,7 @@
         </div>
         <div class="project-grid">
 
-            <div class="project-card">
+            <div class="project-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="project-top">
                     <i class="fas fa-shield-alt"></i>
                     <a href="https://github.com/Sumukha-Kashyap/MITM-Attack-Detection-Using-LSTM-Neural-Networks" target="_blank" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
@@ -651,7 +725,7 @@
                 </div>
             </div>
             
-            <div class="project-card">
+            <div class="project-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="project-top">
                     <i class="fas fa-car-on"></i>
                     <a href="https://github.com/Sumukha-Kashyap/Traffic-Management-System" target="_blank" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
@@ -665,7 +739,7 @@
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="project-top">
                     <i class="fas fa-layer-group"></i>
                     <a href="https://github.com/Sumukha-Kashyap/Weaving-Fabric-Defect-Detection" target="_blank" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
@@ -681,7 +755,7 @@
             </div>
 
 
-            <div class="project-card">
+            <div class="project-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="project-top">
                     <i class="fas fa-child-reaching"></i>
                     <a href="#" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
@@ -696,7 +770,7 @@
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="project-top">
                     <i class="fas fa-smog"></i>
                     <a href="#" style="color:var(--text-gray)"><i class="fab fa-github"></i></a>
@@ -750,7 +824,7 @@
 
         <h4 class="category-title">01. Professional Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">
                         Oracle Cloud Infrastructure 2025 Certified Data Science Professional
@@ -760,7 +834,7 @@
                 <img src="ds_cert.jpeg" alt="Data Science Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">
                         Oracle Cloud Infrastructure 2025 Certified Developer Professional
@@ -773,7 +847,7 @@
 
         <h4 class="category-title">02. NPTEL Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Programming in Java (Elite + Gold)</div>
                     <div class="accent-text">Score: 94%</div>
@@ -781,21 +855,21 @@
                 <img src="java.jpeg" alt="Java Certificate" class="cert-proof-img">
             </div>
             
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Data Analytics with Python (Elite + Silver)</div>
                 </div>
                 <img src="data_analytics.jpeg" alt="Analytics Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Cloud Computing (Elite + Silver)</div>
                 </div>
                 <img src="cloud_computing.jpeg" alt="Cloud Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Ethical Hacking (Elite)</div>
                 </div>
@@ -803,21 +877,21 @@
             </div>
 
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Software Engineering (Elite)</div>
                 </div>
                 <img src="software.jpeg" alt="SE Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Introduction to Internet of Things (Elite)</div>
                 </div>
                 <img src="iot.jpeg" alt="SE Certificate" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Introduction to Machine Learning</div>
                 </div>
@@ -827,21 +901,21 @@
 
         <h4 class="category-title">03. Kaggle Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Python</div>
                 </div>
                 <img src="Sumukha R Kashyap - Python.png" alt="Python Kaggle Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Intro to Programming</div>
                 </div>
                 <img src="Sumukha R Kashyap - Intro to Programming.png" alt="Programming Kaggle Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Intro to Machine Learning</div>
                 </div>
@@ -851,21 +925,21 @@
 
         <h4 class="category-title">04. Hackerrank Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Python (Basic)</div>
                 </div>
                 <img src="py_basic.jpeg" alt="Upload Hackerrank Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Problem Solving (Basic)</div>
                 </div>
                 <img src="problem_solving.jpeg" alt="Upload Hackerrank Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Software Engineer</div>
                 </div>
@@ -875,21 +949,21 @@
 
         <h4 class="category-title">05. Other Certifications</h4>
         <div class="cert-showcase-grid">
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Natural Language Processing</div>
                 </div>
                 <img src="nlp.jpeg" alt="ML Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Introduction to Industry 4.0 & Industrial Internet of Things</div>
                 </div>
                 <img src="iiot.jpeg" alt="ML Cert" class="cert-proof-img">
             </div>
 
-            <div class="cert-card" onclick="openModal(this)">
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">Careers in Finance</div>
                 </div>
@@ -949,20 +1023,18 @@
     </div>
 
     <script>
-        // Function to open the modal
+        // --- 1. MODAL LOGIC ---
         function openModal(element) {
             var modal = document.getElementById("certModal");
             var modalImg = document.getElementById("modalImg");
             var captionText = document.getElementById("modalCaption");
             
-            // Find the hidden image inside the clicked card
             var hiddenImg = element.querySelector('.cert-proof-img');
             
             if (hiddenImg) {
                 modal.style.display = "block";
                 modalImg.src = hiddenImg.src;
                 
-                // Optional: Get title for caption
                 var title = element.querySelector('.cert-title');
                 if(title) {
                     captionText.innerHTML = title.innerText;
@@ -972,18 +1044,98 @@
             }
         }
 
-        // Function to close the modal
         function closeModal() {
             var modal = document.getElementById("certModal");
             modal.style.display = "none";
         }
         
-        // Prevent closing when clicking on the image itself
         document.getElementById("modalImg").onclick = function(e) {
             e.stopPropagation();
         }
+
+        // --- 2. TYPEWRITER EFFECT LOGIC ---
+        const typewriterElement = document.getElementById('typewriter-text');
+        
+        const phrases = [
+            "Cognitive-Driven Tech Enthusiast",
+            "AI & ML Researcher",
+            "Cybersecurity Analyst",
+            "Python Developer",
+            "Continuous Learner"
+        ];
+
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50; 
+            } else {
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100; 
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 2000; 
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500; 
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', typeEffect);
+
+        // --- 3. PARTICLES.JS CONFIGURATION ---
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#64ffda" }, /* Teal Color */
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 150, 
+                    "color": "#8892b0", 
+                    "opacity": 0.2, 
+                    "width": 1 
+                },
+                "move": { 
+                    "enable": true, 
+                    "speed": 2, 
+                    "direction": "none", 
+                    "random": false, 
+                    "straight": false, 
+                    "out_mode": "out", 
+                    "bounce": false 
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { 
+                    "onhover": { "enable": true, "mode": "repulse" }, 
+                    "onclick": { "enable": true, "mode": "push" }, 
+                    "resize": true 
+                },
+                "modes": { 
+                    "repulse": { "distance": 100, "duration": 0.4 }, 
+                    "push": { "particles_nb": 4 } 
+                }
+            },
+            "retina_detect": true
+        });
     </script>
 
 </body>
-
 </html>
