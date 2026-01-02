@@ -36,7 +36,7 @@
             background-color: var(--bg-dark);
             color: var(--text-gray);
             line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scroll from 3D effects */
+            overflow-x: hidden;
         }
 
         /* --- PARTICLES BACKGROUND --- */
@@ -45,7 +45,7 @@
             width: 100%;
             height: 100%;
             background-color: var(--bg-dark);
-            z-index: -1; /* Behind everything */
+            z-index: -1;
             top: 0;
             left: 0;
         }
@@ -56,7 +56,7 @@
             top: 0;
             width: 100%;
             padding: 1.5rem 2rem;
-            background: rgba(10, 25, 47, 0.85); /* Slightly more transparent */
+            background: rgba(10, 25, 47, 0.85);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
@@ -135,7 +135,7 @@
         .glitch-hover:hover {
             animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
             color: var(--primary);
-            text-shadow: 3px 3px var(--bg-dark), -2px -2px #ff00de; /* Cyberpunk Pink Shadow */
+            text-shadow: 3px 3px var(--bg-dark), -2px -2px #ff00de;
         }
 
         /* TYPEWRITER STYLES */
@@ -161,7 +161,7 @@
 
         .hero p {
             max-width: 540px;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             font-size: 1.1rem;
         }
 
@@ -174,7 +174,6 @@
             overflow: hidden;
             box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
             transition: var(--transition);
-            /* Ensure the image doesn't tilt weirdly */
             transform-style: preserve-3d;
         }
 
@@ -188,7 +187,6 @@
 
         .hero-img-container:hover {
             box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
-            /* Simple scale for profile image instead of tilt for stability */
             transform: scale(1.02); 
         }
 
@@ -221,7 +219,7 @@
         section {
             padding: 5rem 10%;
             position: relative;
-            z-index: 1; /* Above particles */
+            z-index: 1;
         }
 
         .section-title {
@@ -259,7 +257,7 @@
 
         /* --- List Item Styles --- */
         .list-item-card {
-            background: rgba(17, 34, 64, 0.7); /* Translucent for particles */
+            background: rgba(17, 34, 64, 0.7);
             backdrop-filter: blur(5px);
             padding: 1.5rem;
             margin-bottom: 1rem;
@@ -302,26 +300,22 @@
         }
 
         .project-card {
-            background: rgba(17, 34, 64, 0.8); /* Translucent */
+            background: rgba(17, 34, 64, 0.8);
             backdrop-filter: blur(5px);
             padding: 2rem;
             border-radius: 6px;
-            /* Transition handled by Vanilla Tilt largely, but keeping this for color */
             transition: background 0.3s;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             height: 100%;
-            /* 3D Transform Settings */
             transform-style: preserve-3d;
             transform: perspective(1000px);
         }
 
-        /* Removed standard hover transform to let Vanilla Tilt handle movement */
         .project-card:hover {
             background: rgba(23, 42, 69, 0.95);
-            /* box-shadow: 0 20px 30px -15px rgba(0,0,0,0.5); Managed by glare */
         }
 
         .project-card::before {
@@ -342,7 +336,7 @@
             margin-bottom: 1.5rem;
             color: var(--primary);
             font-size: 2rem;
-            transform: translateZ(20px); /* Pop out effect */
+            transform: translateZ(20px);
         }
 
         .project-card h4 {
@@ -371,6 +365,72 @@
             font-family: monospace;
             font-size: 0.8rem;
             transform: translateZ(20px);
+        }
+
+        /* --- BADGES SECTION STYLES --- */
+        .badges-container {
+            display: flex;
+            justify-content: center; /* Center Aligned */
+            gap: 3rem; 
+            margin: 4rem 0 2rem 0;
+            flex-wrap: wrap;
+            align-items: baseline;
+        }
+
+        .badge-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px; 
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .badge-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .badge-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        /* Base style for badges */
+        .badge-img-display {
+            width: 100px; 
+            height: 100px; 
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(100, 255, 218, 0.6));
+            transition: var(--transition);
+        }
+
+        /* Specific style to make Oracle badges bigger */
+        .oracle-badge {
+            width: 140px; 
+            height: 140px;
+        }
+
+        .badge-card:hover .badge-img-display {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 25px rgba(100, 255, 218, 0.8));
+        }
+
+        .badge-title {
+            color: var(--secondary);
+            font-family: monospace;
+            font-size: 0.9rem; 
+            margin-bottom: 0.3rem;
+            line-height: 1.2;
+        }
+
+        .badge-sub {
+            color: var(--primary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* --- Certifications Layout --- */
@@ -612,6 +672,12 @@
             section { padding: 4rem 5%; }
             .nav-links { display: none; }
             .modal-content { width: 95%; }
+            
+            /* Responsive Badges */
+            .badges-container {
+                justify-content: center;
+                gap: 2rem;
+            }
         }
     </style>
 </head>
@@ -827,9 +893,9 @@
             <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">
-                        Oracle Cloud Infrastructure 2025 Certified Data Science Professional
+                        Oracle 2025 Certified Data Science Professional
                     </div>
-                    <img src="Data Science.jpg" alt="Oracle Badge" class="cert-badge-img">
+                    <!-- <img src="ds_badge.png" alt="Oracle Badge" class="badge-img-display"> -->
                 </div>
                 <img src="ds_cert.jpeg" alt="Data Science Certificate" class="cert-proof-img">
             </div>
@@ -837,11 +903,21 @@
             <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="cert-header">
                     <div class="cert-title">
-                        Oracle Cloud Infrastructure 2025 Certified Developer Professional
+                        Oracle 2025 Certified Developer Professional
                     </div>
-                    <img src="Cloud developer.jpg" alt="Oracle Badge" class="cert-badge-img">
+                    <!-- <img src="dev_badge.png" alt="Oracle Badge" class="badge-img-display"> -->
                 </div>
                 <img src="cloud_cert.jpeg" alt="Developer Certificate" class="cert-proof-img">
+            </div>
+
+            <div class="cert-card" onclick="openModal(this)" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <div class="cert-header">
+                    <div class="cert-title">
+                        IBM Certified - Cybersecurity Fundamentals
+                    </div>
+                    <!-- <img src="ibm_badge.png" alt="IBM Badge" class="badge-img-display"> -->
+                </div>
+                <img src="cybersec.jpeg" alt="IBM Certificate" class="cert-proof-img">
             </div>
         </div>
 
@@ -970,7 +1046,34 @@
                 <img src="finance.jpeg" alt="ML Cert" class="cert-proof-img">
             </div>
         </div>
-    </section>
+
+        <h4 class="category-title" style="text-align: center; display: block; border: none; margin-top: 4rem;">Badges Earned</h4>
+        <div class="badges-container">
+            <div class="badge-card">
+                <div class="badge-circle">
+                    <img src="ds_badge.png" alt="Oracle DS Badge" class="badge-img-display oracle-badge">
+                </div>
+                <div class="badge-title">OCI Data Science</div>
+                <div class="badge-sub">Oracle</div>
+            </div>
+
+            <div class="badge-card">
+                <div class="badge-circle">
+                    <img src="dev_badge.png" alt="Oracle Dev Badge" class="badge-img-display oracle-badge">
+                </div>
+                <div class="badge-title">OCI Developer</div>
+                <div class="badge-sub">Oracle</div>
+            </div>
+
+            <div class="badge-card">
+                <div class="badge-circle">
+                    <img src="ibm_badge.png" alt="IBM Badge" class="badge-img-display">
+                </div>
+                <div class="badge-title">Cybersecurity</div>
+                <div class="badge-sub">IBM</div>
+            </div>
+        </div>
+        </section>
 
     <section id="research">
         <div class="section-title">
