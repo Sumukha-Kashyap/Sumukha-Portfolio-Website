@@ -19,6 +19,7 @@
             --bg-light: #112240;
             --text-gray: #8892b0;
             --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            --deloitte-green: #86bc25;
         }
 
         * {
@@ -215,6 +216,120 @@
             box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
         }
 
+        /* --- CURRENT POSITION SECTION --- */
+        .current-position {
+            padding: 3rem 10%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .position-card {
+            background: linear-gradient(135deg, rgba(17, 34, 64, 0.9) 0%, rgba(23, 42, 69, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 8px 32px rgba(100, 255, 218, 0.15);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .position-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .position-card:hover::before {
+            left: 100%;
+        }
+
+        .position-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(100, 255, 218, 0.25);
+            border-color: var(--deloitte-green);
+        }
+
+        .position-content {
+            flex: 1;
+            z-index: 1;
+        }
+
+        .position-badge {
+            display: inline-block;
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-family: monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--primary);
+        }
+
+        .position-title {
+            color: var(--secondary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .position-company {
+            color: var(--deloitte-green);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .position-duration {
+            color: var(--text-gray);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .position-logo-img {
+            max-width: 100%; 
+            width: 450px; 
+            height: auto; 
+            object-fit: contain;
+            display: block;
+        }
+
+        .position-logo-container {
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .position-logo {
+            width: 180px;
+            height: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+            transition: var(--transition);
+        }
+
+        .position-card:hover .position-logo-img {
+            opacity: 1;
+            filter: drop-shadow(0 0 10px rgba(134, 188, 37, 0.5));
+        }
+
         /* --- Sections General --- */
         section {
             padding: 5rem 10%;
@@ -370,7 +485,7 @@
         /* --- BADGES SECTION STYLES --- */
         .badges-container {
             display: flex;
-            justify-content: center; /* Center Aligned */
+            justify-content: center;
             gap: 3rem; 
             margin: 4rem 0 2rem 0;
             flex-wrap: wrap;
@@ -398,7 +513,6 @@
             position: relative;
         }
 
-        /* Base style for badges */
         .badge-img-display {
             width: 100px; 
             height: 100px; 
@@ -407,7 +521,6 @@
             transition: var(--transition);
         }
 
-        /* Specific style to make Oracle badges bigger */
         .oracle-badge {
             width: 140px; 
             height: 140px;
@@ -673,7 +786,29 @@
             .nav-links { display: none; }
             .modal-content { width: 95%; }
             
-            /* Responsive Badges */
+            .current-position {
+                padding: 2rem 5%;
+            }
+            
+            .position-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+            
+            .position-logo-img {
+                width: 200px;
+            }
+            
+            .position-title {
+                font-size: 1.4rem;
+                justify-content: center;
+            }
+            
+            .position-company {
+                font-size: 1.2rem;
+            }
+            
             .badges-container {
                 justify-content: center;
                 gap: 2rem;
@@ -689,6 +824,7 @@
         <a href="#" class="logo">SRK.</a>
         <div class="nav-links">
             <a href="#about">About</a>
+            <a href="#current">Current Role</a>
             <a href="#education">Education</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
@@ -716,6 +852,26 @@
         
         <div class="hero-img-container">
             <img src="mypic.png" alt="Sumukha R Kashyap" class="hero-img">
+        </div>
+    </section>
+
+    <!-- CURRENT POSITION SECTION -->
+    <section class="current-position" id="current">
+        <div class="position-card" data-tilt data-tilt-max="5" data-tilt-speed="400">
+            <div class="position-logo-container">
+                <img src="logo.png" alt="Deloitte Logo" class="position-logo-img">
+            </div>
+            <div class="position-content">
+                <span class="position-badge">
+                    <i class="fas fa-briefcase"></i> Current Position
+                </span>
+                <div class="position-title">
+                    Analyst
+                    <i class="fas fa-check-circle" style="font-size: 1.2rem; color: var(--deloitte-green);"></i>
+                </div>
+                <div class="position-company">Deloitte Touche Tohmatsu India LLP</div>
+                <div class="position-duration">January 2026 - Present</div>
+            </div>
         </div>
     </section>
 
@@ -1127,6 +1283,8 @@
             <a href="mailto:sumukharkashyap@gmail.com" class="contact-icon"><i class="fas fa-envelope"></i></a>
             <a href="tel:+918073475514" class="contact-icon"><i class="fas fa-phone-alt"></i></a>
         </div>
+
+              
         
         <p style="margin-top: 5rem; font-size: 0.8rem; font-family: monospace;">
             Designed & Built by Sumukha R Kashyap
@@ -1217,7 +1375,7 @@
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#64ffda" }, /* Teal Color */
+                "color": { "value": "#64ffda" },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.5, "random": false },
                 "size": { "value": 3, "random": true },
